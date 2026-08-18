@@ -1,0 +1,24 @@
+@startuml
+skinparam DefaultTextAlignment center
+
+|GitHub|
+start
+:Developer pushes code to **main** branch;
+
+|GitHub Actions Pipeline|
+:Trigger workflow **Deploy to Azure Web App**;
+:Initialize runner (**ubuntu-latest**);
+
+|Steps|
+:Checkout repository code\n(actions/checkout@v4);
+:Authenticate & Deploy to Azure Web App\n(azure/webapps-deploy@v3\nusing Publish Profile Secret);
+
+if (Deployment successful?) then (yes)
+  :Status: **Success** (Blue checkmark);
+  stop
+else (no)
+  :Status: **Failure** (Red cross);
+  stop
+endif
+
+@enduml
